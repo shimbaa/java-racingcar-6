@@ -4,6 +4,7 @@ public enum Movement {
     FORWARD(1),
     STOP(0);
 
+    private static final int MOVEMENT_CRITERION = 4;
     private final int addingValue;
 
     Movement(int addingValue) {
@@ -11,7 +12,7 @@ public enum Movement {
     }
 
     public static Movement from(int randomNumber) {
-        if (randomNumber >= 4) {
+        if (randomNumber >= MOVEMENT_CRITERION) {
             return FORWARD;
         }
         return STOP;
