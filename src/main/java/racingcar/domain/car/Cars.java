@@ -1,6 +1,7 @@
 package racingcar.domain.car;
 
 import camp.nextstep.edu.missionutils.Randoms;
+import java.util.HashSet;
 import java.util.List;
 import racingcar.domain.Movement;
 
@@ -8,9 +9,12 @@ public class Cars {
     private static final int START_INCLUSIVE = 0;
     private static final int END_INCLUSIVE = 9;
     private static final int DEFAULT_POSITION = 0;
+
+    private static final String DUPLICATE_NAME = "자동차이름은 중복될 수 없습니다.";
     private final List<Car> cars;
 
     public Cars(List<String> carNames) {
+        validateDuplicateCarName(carNames);
         this.cars = initCars(carNames);
     }
 
@@ -18,6 +22,18 @@ public class Cars {
         return carNames.stream()
                 .map(Car::new)
                 .toList();
+    }
+
+    public static void validateDuplicateCarName(List<String> carNames) {
+        HashSet<String> carNameSet = new HashSet<>(carNames);
+
+        if (isDuplicateNameExist(carNames, carNameSet)) {
+            throw new IllegalArgumentException(DUPLICATE_NAME);
+        }
+    }
+
+    private static boolean isDuplicateNameExist(List<String> carNames, HashSet<String> carNameSet) {
+        return carNameSet.size() != carNames.size();
     }
 
     public void race() {
